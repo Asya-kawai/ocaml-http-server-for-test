@@ -1,0 +1,6 @@
+(executable
+ (name http_server)
+ (link_flags :standard -linkall)
+ (libraries dream))
+
+(data_only_dirs _esy esy.lock lib node_modules)

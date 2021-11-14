@@ -1,0 +1,9 @@
+_build/
+_opam/
+node_modules/
+.merlin
+*.cmi
+*.cmx
+*.o
+*.install
+.*.swp
