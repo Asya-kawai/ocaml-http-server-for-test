@@ -1,9 +1,25 @@
+# dune
 _build/
+*.install
+
+# opam
 _opam/
+*.lock
+*.locked
+
+# npm
 node_modules/
+
+# ocaml
 .merlin
 *.cmi
 *.cmx
 *.o
-*.install
+
+# esy
+_esy/
+esy.lock
+
+# others
 .*.swp
+.vscode/

@@ -15,4 +15,4 @@
   (description "The application to debug the network settings, security settings and so on.")
   (depends
     (dune (> 2.0))
-    (dream (>= 1.0.0))))
+    (dream (>= 1.0.0~alpha2))))

@@ -9,7 +9,7 @@ authors: ["Toshiki Kawai"]
 license: "MIT"
 depends: [
   "dune" {>= "2.9" & > "2.0"}
-  "dream" {>= "1.0.0"}
+  "dream" {>= "1.0.0~alpha2"}
   "odoc" {with-doc}
 ]
 build: [
