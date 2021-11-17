@@ -110,6 +110,25 @@ curl -v --user "hoge:BaaaaaaaaaaaaadPassword" localhost:8080/basic-auth/hoge/fug
 
 # Run with docker
 
+When building with docker, you might fix `http_server.ml`.
+`http_server` only accepts access from localhost by default,
+however `http_server` in docker muts be accepted from all accessses.
+
+Fix code:
+```
+let () =
+  Dream.run
+  ...
+```
+to
+
+```
+let () =
+  Dream.run
+  ~interface:"0.0.0.0"
+  ...
+```
+
 Build and Run:
 
 ```
