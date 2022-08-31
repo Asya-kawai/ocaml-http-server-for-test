@@ -132,7 +132,7 @@ let () =
 Build and Run:
 
 ```
-docker build .
+docker build . --no-cache --pull
 
 docker run --rm -p 10080:8080 <IMAGE ID>
 ```
