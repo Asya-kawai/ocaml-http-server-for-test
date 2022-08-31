@@ -23,11 +23,11 @@ Headers: ---
 Body: ---
 %s\n
 "
-    (if Dream.https req then "s" else "")
+    (if Dream.tls req then "s" else "")
     ("localhost")
     (Dream.target req)
     (Dream.method_to_string @@ Dream.method_ req)
-    (match Dream.version req with (1, 1) -> "1.1" | (2, 0) -> "2.0" | _ -> "?.?")
+    (if Dream.tls req then "2.0" else "1.1")
     (String.concat "\n" @@ List.map header_to_string @@ Dream.all_headers req)
     req_body
 
@@ -54,7 +54,7 @@ let display_whoami _req =
 (* Show the specific environment variable. *)
 let display_env_variable req =
   let open Lwt.Syntax in
-  let var_name = Dream.param "variable" req in
+  let var_name = Dream.param req "variable" in
   let+ var_val =
     try
       Lwt_result.return (Sys.getenv var_name)
@@ -107,7 +107,7 @@ let display_envs _req =
 
 (* Show the expression for status code(status code) and return its code. *)
 let display_status_code req =
-  let code = Dream.param "code" req |> int_of_string in
+  let code = Dream.param req "code" |> int_of_string in
   let status = code |> Dream.int_to_status in
   match (Dream.status_to_reason status) with
     | Some rsn -> Dream.respond ~status:status @@ Printf.sprintf "Code: %d\nReason: %s\n" code rsn
@@ -121,16 +121,16 @@ let display_ok_status _ =
 *)
 let delay_response req =
   let open Lwt.Syntax in
-  let second = Dream.param "second" req |> float_of_string in
+  let second = Dream.param req "second" |> float_of_string in
   let+ wait =  Lwt_unix.sleep second in
   (wait;
   Dream.response @@ Printf.sprintf "Waited for %.0f seconds.\n" second)
 
 (* Basic authorize based on user name and password in path parameters. *)
 let verify_basic_auth req =
-  let req_user = Dream.param "user" req in
-  let req_pass = Dream.param "password" req in
-  Dream.header "Authorization" req
+  let req_user = Dream.param req "user" in
+  let req_pass = Dream.param req "password" in
+  Dream.header req "Authorization"
   |> (fun a -> match a with
       | Some bauth ->
         (* Separate "Basic" and Base64 encoded string. *)
@@ -176,4 +176,3 @@ let () =
     Dream.get "/basic-auth/:user/:password" verify_basic_auth;
     Dream.get "/basic-auth/:user/:password/" verify_basic_auth;
   ]
-  @@ Dream.not_found
