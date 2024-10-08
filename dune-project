@@ -7,7 +7,7 @@
 (authors "Toshiki Kawai")
 (maintainers "Toshiki Kawai")
 (homepage "https://github.com/Asya-kawai/ocaml-http-server-for-test")
-(bug-reports "https://github.com/Asya-kawai/ocaml-http-server-for-test/issues")
+(bug_reports "https://github.com/Asya-kawai/ocaml-http-server-for-test/issues")
 
 (generate_opam_files true)
 
